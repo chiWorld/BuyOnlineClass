@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mm.mapper.MemberMapper">
+	<!-- java.lang은 패키지라서 소문자로 써야함 -->
+	<!-- 로그인 -->
+	<select id="loginCheck" resultType="java.lang.Integer">
+		select count(*) from member where id=#{id} and pw=#{pw}
+	</select>
+	
+	<!-- 회원가입 -->
+	<insert id="insertMember">
+		insert into member(id, pw, name) values (#{id}, #{pw}, #{name})
+	</insert>
+	
+	<!-- 회원정보 불러오기 -->
+	<select id="allMem" resultType="com.mm.dto.MemberDTO">
+		select * from member
+	</select>
+	
+	<!-- 몇 point 있는지 검색 -->
+	<select id="checkPoint" resultType="java.lang.Integer">
+		select point from member where id= #{id}
+	</select>
+	
+	<!-- 광고 클릭 시 포인트 UP -->
+	<update id="upPoint">
+		update member set point=point+1000 where id=#{id}
+	</update>
+	
+	<!-- 클래스 구매 -->
+	<update id="buyClass">
+		update member set point=#{point} where id=#{id}
+	</update>
+	
+	<!-- 이름 찾기 -->
+	<select id="findName" resultType="string">
+		select name from member where id=#{id}
+	</select>
+	
+	<!-- 회원정보 보기 -->
+	<select id="selectOneMem" resultType="com.mm.dto.MemberDTO">
+		select * from member where id = #{id}
+	</select>
+	
+	<!-- 회원정보 수정 -->
+	<update id="updateInfo">
+		update member set pw = #{pw}, name = #{name}, point=#{point} where id = #{id}
+	</update>
+	
+	<!-- 회원정보 삭제 -->
+	<delete id="deleteInfo">
+		delete from member where id = #{id}
+	</delete>
+	
+	
+</mapper>
