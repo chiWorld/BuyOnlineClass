@@ -47,6 +47,15 @@ public class HomeController {
 				request.setAttribute("member", service.allMemInfo());
 			} else {
 				ret="main";			//메인페이지 경로
+				String userId = (String)session.getAttribute("id");
+				
+				String userName = service.findName(userId);
+				int userPoint = service.selectPoint(userId);
+				
+				request.setAttribute("id", userId);
+				request.setAttribute("name", userName);
+				request.setAttribute("point", userPoint);
+				System.out.println("id :" + userId + " 이름 : " + userName + " 포인트 : " + userPoint);
 			}
 			
 		} else {
@@ -110,52 +119,29 @@ public class HomeController {
 		return "main";
 	}
 	
-	//intro구입
-	@RequestMapping(value = "/intro350")
-	public String intro350(HttpServletRequest request, HttpSession session) {
+	//클래스 구입
+	@RequestMapping(value = "order")
+	public String order(HttpServletRequest request, HttpSession session, String className) {
+		//클래스 구매 포인트
+		int pointPay = 0;
+		
+		switch(className) {
+		case "intro350" : pointPay = 100000; break;
+		case "java350" : pointPay = 500000; break;
+		case "cpp350" : pointPay = 300000; break;
+		}
+		
 		String id = (String)session.getAttribute("id");
-		int intro = 100000;
 		int userPoint = service.selectPoint(id);
 		
-		if(userPoint > intro) {
-			service.buyClass(id, intro);
-			request.setAttribute("msg", "컨텐츠(intro)를 구입하였습니다.");
+		if(userPoint >= pointPay) {
+			service.buyClass(id, userPoint);
+			request.setAttribute("point", userPoint);
+			request.setAttribute("msg", "컨텐츠("+ className +")를 구입하였습니다.");
 		} else {
 			request.setAttribute("msg", "포인트가 부족합니다. 광고를 클릭하세요.");
 		}
 		
-		return "main";
-	}
-	
-	//java구입
-	@RequestMapping(value = "/java350")
-	public String java350(HttpServletRequest request, HttpSession session) {
-		String id = (String)session.getAttribute("id");
-		int java350 = 500000;
-		int userPoint = service.selectPoint(id);
-		
-		if(userPoint > java350) {
-			service.buyClass(id, java350);
-			request.setAttribute("msg", "컨텐츠(java)를 구입하였습니다.");
-		} else {
-			request.setAttribute("msg", "포인트가 부족합니다. 광고를 클릭하세요.");
-		}
-		return "main";
-	}
-	
-	//cpp구입
-	@RequestMapping(value = "/cpp350")
-	public String cpp350(HttpServletRequest request, HttpSession session) {
-		String id = (String)session.getAttribute("id");
-		int cpp350 = 300000;
-		int userPoint = service.selectPoint(id);
-		
-		if(userPoint > cpp350) {
-			service.buyClass(id, cpp350);
-			request.setAttribute("msg", "컨텐츠(cpp)를 구입하였습니다.");
-		} else {
-			request.setAttribute("msg", "포인트가 부족합니다. 광고를 클릭하세요.");
-		}
 		return "main";
 	}
 	
@@ -164,7 +150,8 @@ public class HomeController {
 	public String intro(HttpServletRequest request, HttpSession session) {
 		String id = (String)session.getAttribute("id");
 		service.point1000(id);
-		request.setAttribute("koreaIT", "이동");
+		request.setAttribute("msg", "1000점이 적립되었습니다.");
+		request.setAttribute("koreaITurl", "http://koreaisacademy.com");
 		return "main";
 	}
 	

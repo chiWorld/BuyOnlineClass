@@ -5,10 +5,16 @@
 %>
 	<script>alert('${msg}');</script>
 <%		
-	} else if(request.getAttribute("koreaIT") != null) {
+	} else if(request.getAttribute("koreaITurl") != null) {
 %>
-	<script>location.href = 'http://www.koreaisacademy.com/';</script>
+	<script>location.href='${koreaITurl}';</script>
 <%
+	}
+%>
+<%
+	if(session.getAttribute("loginId") == null) {
+		request.setAttribute("msg", "로그인이 필요합니다.");
+		request.getRequestDispatcher("/").forward(request, response);
 	}
 %>
 <html>
@@ -39,9 +45,9 @@
 	<div class="clickPhoto">
 		<table>
 			<tr>
-				<td><a href="intro350"><img src="resources/img/Intro_350_408.png"></a></td>
-				<td><a href="java350"><img src="resources/img/Java_350_408.png"></a></td>
-				<td><a href="cpp350"><img src="resources/img/Cpp_350_408.png"></a></td>
+				<td><a href="order?className=intro350"><img src="resources/img/Intro_350_408.png"></a></td>
+				<td><a href="order?className=java350"><img src="resources/img/Java_350_408.png"></a></td>
+				<td><a href="order?className=cpp350"><img src="resources/img/Cpp_350_408.png"></a></td>
 			</tr>
 		</table>
 		<div class="koreaIT">
