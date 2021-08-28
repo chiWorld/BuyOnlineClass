@@ -41,12 +41,13 @@ public class HomeController {
 		String ret = "";
 		
 		if(result) {
+			
 			session.setAttribute("id", id);
+			
 			if(id.equals("admin")) {
-				ret="adminMain";	//관리자 페이지 경로
 				request.setAttribute("member", service.allMemInfo());
+				ret="adminMain";	//관리자 페이지 경로
 			} else {
-				ret="main";			//메인페이지 경로
 				String userId = (String)session.getAttribute("id");
 				
 				String userName = service.findName(userId);
@@ -56,6 +57,7 @@ public class HomeController {
 				request.setAttribute("name", userName);
 				request.setAttribute("point", userPoint);
 				System.out.println("id :" + userId + " 이름 : " + userName + " 포인트 : " + userPoint);
+				ret="main";			//메인페이지 경로
 			}
 			
 		} else {
@@ -132,10 +134,13 @@ public class HomeController {
 		}
 		
 		String id = (String)session.getAttribute("id");
+		String userName = service.findName(id);
 		int userPoint = service.selectPoint(id);
 		
 		if(userPoint >= pointPay) {
 			service.buyClass(id, userPoint);
+			userPoint = service.selectPoint(id);
+			request.setAttribute("name", userName);
 			request.setAttribute("point", userPoint);
 			request.setAttribute("msg", "컨텐츠("+ className +")를 구입하였습니다.");
 		} else {
