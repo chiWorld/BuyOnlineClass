@@ -138,11 +138,15 @@ public class HomeController {
 		int userPoint = service.selectPoint(id);
 		
 		if(userPoint >= pointPay) {
-			service.buyClass(id, userPoint);
-			userPoint = service.selectPoint(id);
-			request.setAttribute("name", userName);
-			request.setAttribute("point", userPoint);
-			request.setAttribute("msg", "컨텐츠("+ className +")를 구입하였습니다.");
+			boolean result = service.buyClass(id, userPoint);
+			System.out.println("포인트 사기 성공" + result);
+			if(result) {
+				userPoint = service.selectPoint(id);
+				request.setAttribute("name", userName);
+				request.setAttribute("point", userPoint);
+				request.setAttribute("msg", "컨텐츠("+ className +")를 구입하였습니다.");
+			}
+			
 		} else {
 			request.setAttribute("msg", "포인트가 부족합니다. 광고를 클릭하세요.");
 		}

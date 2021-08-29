@@ -6,8 +6,8 @@
 
 	if(request.getAttribute("koreaITurl") != null) {%>
 	<script>location.href='${koreaITurl}';</script>
-<%	}	%>
-<%
+<%	}
+	
 	if(session.getAttribute("id") == null) {
 		request.setAttribute("msg", "로그인이 필요합니다.");
 		request.getRequestDispatcher("/").forward(request, response);
