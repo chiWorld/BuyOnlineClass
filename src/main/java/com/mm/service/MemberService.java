@@ -10,7 +10,7 @@ public interface MemberService {
 	List<MemberDTO> allMemInfo();
 	int selectPoint(String id);
 	int point1000(String id);
-	boolean buyClass(String id, int price);
+	boolean buyClass(String id, int pointPay);
 	String findName(String id);
 	MemberDTO oneMemInfo(String id);
 	boolean updateInfo(MemberDTO dto);

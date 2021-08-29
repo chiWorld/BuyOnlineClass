@@ -63,6 +63,8 @@ public class MemberDAOImpl implements MemberDAO {
 		map1.put("id", id);
 		map1.put("point", point);
 		int result = sqlSession.update(NAMESPACE + ".buyClass", map1);
+		
+		System.out.println("dao id : " + id + " /dao point" + point + " /dao result" + result);
 		return result;
 	}
 

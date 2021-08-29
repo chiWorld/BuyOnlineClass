@@ -54,11 +54,9 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public boolean buyClass(String id, int price) {
-		
-		int result = dao.buyClass(id, price);
-		
-		return result==1; //1이면 update 성공
+	public boolean buyClass(String id, int pointPay) {
+		int result = dao.buyClass(id, pointPay);
+		return result == 1;
 	}
 
 	@Override

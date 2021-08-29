@@ -19,17 +19,6 @@
 	<style>
 		.koreaIt {margin-left: 850px;}
 	</style>
-	<script>
-		function intro100() {
-			location.href='order?className=intro350';
-		}
-		function java500() {
-			location.href='order?className=java350';
-		}
-		function cpp300() {
-			location.href='order?className=cpp350';
-		}
-	</script>
 </head>
 <body>
 	<div class="header">
@@ -52,9 +41,9 @@
 	<div class="clickPhoto">
 		<table>
 			<tr>
-				<td><a href="#" onClick="intro100()"><img src="resources/img/Intro_350_408.png"></td>
-				<td><a href="#" onClick="java500()"><img src="resources/img/Java_350_408.png"></td>
-				<td><a href="#" onClick="cpp300()"><img src="resources/img/Cpp_350_408.png"></td>
+				<td><a href="order?className=intro"><img src="resources/img/Intro_350_408.png"></a></td>
+				<td><a href="order?className=java"><img src="resources/img/Java_350_408.png"></a></td>
+				<td><a href="order?className=cpp"><img src="resources/img/Cpp_350_408.png"></a></td>
 			</tr>
 		</table>
 		<div class="koreaIT">

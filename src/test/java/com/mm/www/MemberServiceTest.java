@@ -54,7 +54,9 @@ public class MemberServiceTest {
 	
 	@Test
 	public void testBuyClass() throws Exception {
-		System.out.println(service.buyClass("admin", 100000));
+		System.out.println("현재 admin에 있는 포인트 : " + service.selectPoint("admin")); //100000
+		System.out.println("buyClass실행 결과 " + service.buyClass("admin", 100000)); //false
+		System.out.println("포인트 사용 후 test1계정에 있는 포인트 : " + service.selectPoint("admin")); //303000
 	}
 	
 	@Test

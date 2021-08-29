@@ -9,11 +9,6 @@
 		select count(*) from member where id=#{id} and pw=#{pw}
 	</select>
 	
-	<!-- 회원가입 -->
-	<insert id="insertMember">
-		insert into member(id, pw, name) values (#{id}, #{pw}, #{name})
-	</insert>
-	
 	<!-- 회원정보 불러오기 -->
 	<select id="allMem" resultType="com.mm.dto.MemberDTO">
 		select * from member
@@ -24,16 +19,6 @@
 		select point from member where id= #{id}
 	</select>
 	
-	<!-- 광고 클릭 시 포인트 UP -->
-	<update id="upPoint">
-		update member set point=point+1000 where id=#{id}
-	</update>
-	
-	<!-- 클래스 구매 -->
-	<update id="buyClass">
-		update member set point=#{point} where id=#{id}
-	</update>
-	
 	<!-- 이름 찾기 -->
 	<select id="findName" resultType="string">
 		select name from member where id=#{id}
@@ -43,6 +28,21 @@
 	<select id="selectOneMem" resultType="com.mm.dto.MemberDTO">
 		select * from member where id = #{id}
 	</select>
+	
+	<!-- 회원가입 -->
+	<insert id="insertMember">
+		insert into member(id, pw, name) values (#{id}, #{pw}, #{name})
+	</insert>
+	
+	<!-- 광고 클릭 시 포인트 UP -->
+	<update id="upPoint">
+		update member set point=point+1000 where id=#{id}
+	</update>
+	
+	<!-- 클래스 구매 -->
+	<update id="buyClass">
+		update member set point=#{point} where id=#{id}
+	</update>
 	
 	<!-- 회원정보 수정 -->
 	<update id="updateInfo">
