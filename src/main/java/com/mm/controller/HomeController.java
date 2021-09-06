@@ -199,7 +199,7 @@ public class HomeController {
 		return "adminMain";
 	}
 	
-	// 스케줄러 시작할게요 (= 10초마다 MyJob 실행할게요).
+	// 스케줄러 시작할게요 (= 20초마다 MyJob 실행할게요).
 	@RequestMapping(value = "/adminScheStart")
 	public String homeStart(HttpServletRequest request) throws SchedulerException {
 		SchedulerFactory sf = new StdSchedulerFactory();

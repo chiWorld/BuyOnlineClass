@@ -10,6 +10,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 import com.mm.service.MemberService;
 
+//스케줄러 설정
 public class MyJob implements Job{
 	
 	private MemberService memberService;
