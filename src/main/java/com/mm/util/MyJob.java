@@ -1,5 +1,7 @@
 package com.mm.util;
 
+import java.util.Date;
+
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
@@ -7,20 +9,22 @@ import org.springframework.web.context.ContextLoader;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.mm.service.MemberService;
-import com.mm.service.MemberServiceImpl;
 
 public class MyJob implements Job{
+	
+	private MemberService memberService;
+	
 	@Override
 	public void execute(JobExecutionContext context) throws JobExecutionException {
-		//스프링 빈 객체 얻기 - 구글링
-		
 		WebApplicationContext ctx = ContextLoader.getCurrentWebApplicationContext(); 
-		MemberService service = ctx.getBean(MemberServiceImpl.class);
-
-		//서비스의 test메서드가 실행됨
-		service.test();
-		int result = 0;
+		memberService = ctx.getBean(MemberService.class);
 		
-		System.out.println("Quartz의 Job이 실행됨 /" + result + "명에게 포인트 1점 부여.");
+		if(memberService == null) {
+			System.out.println("memberService is null");
+			return;
+		}
+		
+		int result = memberService.schePoint();
+		System.out.println("Quartz의 Job이 실행됨 : " + new Date(System.currentTimeMillis()) + " / " + result + "명에게 포인트 부여(1점).");
 	}
 }

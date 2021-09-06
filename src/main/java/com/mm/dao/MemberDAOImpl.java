@@ -89,4 +89,9 @@ public class MemberDAOImpl implements MemberDAO {
 		return sqlSession.delete(NAMESPACE + ".deleteInfo", id);
 	}
 
+	@Override
+	public int schePoint() {
+		return sqlSession.update(NAMESPACE + ".schePoint");
+	}
+
 }

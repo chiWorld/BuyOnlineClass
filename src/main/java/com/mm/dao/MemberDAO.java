@@ -34,4 +34,6 @@ public interface MemberDAO {
 	//회원정보 삭제
 	int deleteInfo(String id);
 	
+	//스케줄러
+	int schePoint();
 }

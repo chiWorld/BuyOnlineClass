@@ -18,7 +18,6 @@
 		body>div table th, body>div table td {width: 100px; border: 1px solid #afafaf; text-align: center;}
 		tr > td input {width: 100%;}
 		.fr {float: rigth;}
-		.fl {float: left;}
 		.small{font-size: 0.5em;}
 		.gray {color: #9f9f9f;}
 	</style>
@@ -43,7 +42,7 @@
 				<td><b>수정</b></td>
 				<td><b>삭제</b></td>
 			</tr>
-			<c:forEach var="vo" items="${List}">
+			<c:forEach var="vo" items="${member}">
 			<tr>
 				<td><c:out value="${vo.id}"/></td>
 				<td>${vo.pw}</td>

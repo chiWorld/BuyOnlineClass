@@ -99,4 +99,9 @@ public class MemberServiceImpl implements MemberService {
 		return result;
 	}
 
+	@Override
+	public int schePoint() {
+		return dao.schePoint();
+	}
+
 }

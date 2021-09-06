@@ -16,4 +16,5 @@ public interface MemberService {
 	boolean updateInfo(MemberDTO dto);
 	boolean deleteInfo(String id);
 	void test();
+	int schePoint();
 }

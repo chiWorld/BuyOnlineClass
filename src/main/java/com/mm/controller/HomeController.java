@@ -8,6 +8,7 @@ import org.quartz.JobBuilder;
 import org.quartz.JobDetail;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
+import org.quartz.SchedulerFactory;
 import org.quartz.Trigger;
 import org.quartz.TriggerBuilder;
 import org.quartz.impl.StdSchedulerFactory;
@@ -108,7 +109,7 @@ public class HomeController {
 	}
 	
 	//클래스 구입
-	@RequestMapping(value = "order")
+	@RequestMapping(value = "/order")
 	public String order(HttpServletRequest request, HttpSession session, String className) {
 		//클래스 구매 포인트
 		int pointPay = 0;
@@ -152,13 +153,13 @@ public class HomeController {
 	}
 	
 	//회원정보 수정
-	@RequestMapping(value = "adminModify")
+	@RequestMapping(value = "/adminModify")
 	public String adminModify(Model model, String id) {
 		MemberDTO info = service.oneMemInfo(id);
 		model.addAttribute("info", info);
-		return "adminMain";
+		return "adminModify";
 	}
-	@RequestMapping(value = "adminModifyAction")
+	@RequestMapping(value = "/adminModifyAction")
 	public String adminModifyAction(Model model, String id, String name, String pw, int point) {
 		boolean updateResult = service.updateInfo(new MemberDTO(id, pw, name, point));
 		String msg = "회원정보가 ";
@@ -175,7 +176,7 @@ public class HomeController {
 
 	
 	//회원정보 삭제
-	@RequestMapping(value = "adminDelete")
+	@RequestMapping(value = "/adminDelete")
 	public String adminDelete(String id, Model model) {
 		boolean result = service.deleteInfo(id);
 		String msg = "회원정보가 ";
@@ -191,35 +192,44 @@ public class HomeController {
 		return "adminMain";
 	}
 	
-	@RequestMapping(value = "/start")  // 스케줄러 시작할게요 (= 10초마다 MyJob 실행할게요).
-	public String homeStart() throws SchedulerException {
-		Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
+	//관리자 페이지
+	@RequestMapping(value = "/adminMain")
+	public String adminMain(HttpServletRequest request) {
+		request.setAttribute("member", service.allMemInfo());
+		return "adminMain";
+	}
+	
+	// 스케줄러 시작할게요 (= 10초마다 MyJob 실행할게요).
+	@RequestMapping(value = "/adminScheStart")
+	public String homeStart(HttpServletRequest request) throws SchedulerException {
+		SchedulerFactory sf = new StdSchedulerFactory();
+		Scheduler scheduler = sf.getScheduler();
 		
 		  // define the job and tie it to our HelloJob class
-		  JobDetail job = JobBuilder.newJob(MyJob.class)
-		      .withIdentity("job1", "group1")
-		      .build();
-
+		  JobDetail job = JobBuilder.newJob(MyJob.class).withIdentity("JobMemberPoint", Scheduler.DEFAULT_GROUP).build();
+	
 		  // Trigger the job to run now, and then repeat every 40 seconds
-		  Trigger trigger = TriggerBuilder.newTrigger()
-		      .withIdentity("trigger1", "group1")
-		      .startNow()
-		      .withSchedule(CronScheduleBuilder.cronSchedule("0/20 * * * * ?"))
-		      .build();
+		  Trigger trigger = TriggerBuilder.newTrigger().withIdentity("TriggerMemberPoint", Scheduler.DEFAULT_GROUP)
+		      .withSchedule(CronScheduleBuilder.cronSchedule("0/20 * * * * ?")).build();
 
 		  // Tell quartz to schedule the job using our trigger
 		  scheduler.scheduleJob(job, trigger);
 		  scheduler.start();
-		  System.out.println("스케줄러가 시작됨.");
-		return "home";
+		  System.out.println("<<< 포인트 스케줄러가 시작되었습니다. >>>");
+		  request.setAttribute("member", service.allMemInfo());
+		return "adminMain";
 	}
 	
-	@RequestMapping(value = "/end")    // 스케줄러 끝낼게요 (= MyJob 그만 할게요).
-	public String homeEnd() throws SchedulerException {
-		Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
+	// 스케줄러 끝낼게요 (= MyJob 그만 할게요).
+	@RequestMapping(value = "/adminScheEnd")
+	public String homeEnd(HttpServletRequest request) throws SchedulerException {
+		SchedulerFactory sf = new StdSchedulerFactory();
+		Scheduler scheduler = sf.getScheduler();
 		scheduler.shutdown();
-		System.out.println("스케줄러가 종료됨.");
-		return "home";
+		System.out.println("<<< 포인트 스케줄러의 실행이 종료되었습니다. >>>");
+		
+		request.setAttribute("member", service.allMemInfo());
+		return "adminMain";
 	}	
 	
 }
