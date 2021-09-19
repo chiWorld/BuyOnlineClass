@@ -11,6 +11,9 @@ public interface MemberDAO {
 	//회원가입
 	int insert(MemberDTO dto);
 	
+	//아이디 확인
+	int checkId(String id);
+	
 	//모든 회원 정보
 	List<MemberDTO> allMem();
 	//포인트 찾기

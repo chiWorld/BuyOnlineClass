@@ -29,6 +29,12 @@ public class MemberServiceImpl implements MemberService {
 	}
 	
 	@Override
+	public boolean checkForDuplicateIds(String id) {
+		int result = dao.checkId(id);
+		return result == 1;
+	}
+	
+	@Override
 	public List<MemberDTO> allMemInfo() {
 		return dao.allMem();
 	}

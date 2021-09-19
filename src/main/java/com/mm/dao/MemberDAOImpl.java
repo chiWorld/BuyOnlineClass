@@ -38,6 +38,11 @@ public class MemberDAOImpl implements MemberDAO {
 	}
 	
 	@Override
+	public int checkId(String id) {
+		return sqlSession.selectOne(NAMESPACE + ".checkId", id);
+	}
+	
+	@Override
 	public List<MemberDTO> allMem() {
 		return sqlSession.selectList(NAMESPACE + ".allMem");
 	}
@@ -93,5 +98,6 @@ public class MemberDAOImpl implements MemberDAO {
 	public int schePoint() {
 		return sqlSession.update(NAMESPACE + ".schePoint");
 	}
+
 
 }

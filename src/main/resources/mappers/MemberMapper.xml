@@ -6,7 +6,7 @@
 	<!-- java.lang은 패키지라서 소문자로 써야함 -->
 	<!-- 로그인 -->
 	<select id="loginCheck" resultType="java.lang.Integer">
-		select count(*) from member where id=#{id} and pw=#{pw}
+		select count(*) from member where id = #{id} and pw = #{pw}
 	</select>
 	
 	<!-- 회원정보 불러오기 -->
@@ -14,14 +14,19 @@
 		select * from member
 	</select>
 	
+	<!-- 아이디 중복 확인 -->
+	<select id="checkId" resultType="java.lang.Integer">
+		select count(*) from member where id = #{id}
+	</select>
+	
 	<!-- 몇 point 있는지 검색 -->
 	<select id="checkPoint" resultType="java.lang.Integer">
-		select point from member where id= #{id}
+		select point from member where id = #{id}
 	</select>
 	
 	<!-- 이름 찾기 -->
 	<select id="findName" resultType="string">
-		select name from member where id=#{id}
+		select name from member where id = #{id}
 	</select>
 	
 	<!-- 회원정보 보기 -->
@@ -36,17 +41,17 @@
 	
 	<!-- 광고 클릭 시 포인트 UP -->
 	<update id="upPoint">
-		update member set point=point+1000 where id=#{id}
+		update member set point=point+1000 where id = #{id}
 	</update>
 	
 	<!-- 클래스 구매 -->
 	<update id="buyClass">
-		update member set point=#{point} where id=#{id}
+		update member set point=#{point} where id = #{id}
 	</update>
 	
 	<!-- 회원정보 수정 -->
 	<update id="updateInfo">
-		update member set pw = #{pw}, name = #{name}, point=#{point} where id = #{id}
+		update member set pw = #{pw}, name = #{name}, point = #{point} where id = #{id}
 	</update>
 	
 	<!-- 회원정보 삭제 -->

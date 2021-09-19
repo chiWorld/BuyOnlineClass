@@ -77,22 +77,18 @@ public class HomeController {
 	//회원가입 확인
 	@RequestMapping(value = "/registerAction")
 	public String registerAction(MemberDTO dto, HttpServletRequest request, String id, String pw, String name) {
-		//회원DB에 insert -> login페이지(msg:"가입되었습니다. 로그인해주세요.")
 		dto.setId(id);
 		dto.setPw(pw);
 		dto.setName(name);
 		
-		boolean result = service.registerMember(dto);
+		boolean result = false;
+		boolean checkId = service.checkForDuplicateIds(id);
+		if(checkId) { result = service.registerMember(dto); }
 		
 		String ret = "";
 		
-		if(result) {
-			request.setAttribute("msg", "가입되었습니다. 로그인해주세요.");
-			ret = "homeLogin";
-		} else {
-			request.setAttribute("msg", "사용중인 아이디입니다");
-			ret = "register";
-		}
+		if(result) {request.setAttribute("msg", "가입되었습니다. 로그인해주세요.");	ret = "homeLogin";
+		} else {	request.setAttribute("msg", "사용중인 아이디입니다");			ret = "register"; }
 		
 		return ret;
 	}

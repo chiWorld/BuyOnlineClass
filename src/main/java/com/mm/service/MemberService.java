@@ -7,6 +7,7 @@ import com.mm.dto.MemberDTO;
 public interface MemberService {
 	boolean loginCheck(String id, String pw);
 	boolean registerMember(MemberDTO dto);
+	boolean checkForDuplicateIds(String id);
 	List<MemberDTO> allMemInfo();
 	int selectPoint(String id);
 	int point1000(String id);
